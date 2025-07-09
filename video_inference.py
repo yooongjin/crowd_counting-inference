@@ -7,9 +7,6 @@ import os
 
 import torch.nn.functional as F
 import numpy as np
-# from mmcv import Config, DictAction
-# from lib.models.build_counter import Baseline_Counter
-# from lib.utils.points_from_den import local_maximum_points
 
 MEAN=[0.485, 0.456, 0.406]
 STD=[0.229, 0.224, 0.225]
@@ -28,14 +25,7 @@ def argument_parser():
 
 def local_maximum_points(density_map, gaussian_maximum,radius=8.,patch_size=128, den_scale=1., threshold=0.15):
     _,_,h,w = density_map.shape
-    # kernel = torch.ones(3,3)/9.
-    # kernel =kernel.unsqueeze(0).unsqueeze(0).cuda()
-    # weight = nn.Parameter(data=kernel, requires_grad=False)
-    # density_map = F.conv2d(density_map, weight, stride=1, padding=1)
 
-
-    # import pdb
-    # pdb.set_trace()
     if h % patch_size != 0:
         pad_dims = (0, 0, 0, patch_size - h % patch_size)
         h = (h // patch_size + 1) * patch_size
@@ -131,11 +121,7 @@ if __name__ == "__main__":
     print(f"Index of sampled frames: {decord_frame_indices}")
 
     frames = torch.tensor(frames[:, :, :, [2, 1, 0]])
-    # frames, h, w = check_frames(frames, 32)
-    # frames = input_transform(frames)
-    # frames = frames.permute(0, 3, 1, 2) 
-    # print(f"Frames shape after transformation: {frames.shape}")
-    
+
     outputs = []
     print("Starting inference...")
     with torch.no_grad():
